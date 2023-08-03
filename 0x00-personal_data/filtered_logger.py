@@ -4,7 +4,6 @@ import logging
 import re
 from typing import List
 import os
-import datetime
 import mysql.connector
 
 
@@ -49,8 +48,7 @@ def get_logger() -> logging.Logger:
     logger.setLevel(logging.INFO)
     logger.propagate = False
     stream_handler = logging.StreamHandler()
-    formatter = logging.Formatter(
-        f'{datetime.datetime.now()} - %(message)s')
+    formatter = RedactingFormatter(PII_FIELDS)
     stream_handler.setFormatter(formatter)
     logger.addHandler(stream_handler)
     return logger
@@ -77,10 +75,8 @@ def main():
     cursor.execute("SELECT * FROM users;")
     logger = get_logger()
     for row in cursor:
-        string = ''
-        for key in row:
-            string += f'{key}={row[key]}; '
-        logger.info(string)
+        log_msg = ' '.join([f"{key}={row[key]}" for key in row])
+        logger.info(log_msg)
     cursor.close()
     db.close()
 # end of Task 4
