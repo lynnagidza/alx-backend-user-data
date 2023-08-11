@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """ Auth class to manage the API authentication """
+from os import getenv
 from typing import List, TypeVar
 import fnmatch
 from flask import request
@@ -33,3 +34,11 @@ class Auth:
         """ current_user
         """
         return None
+
+    def session_cookie(self, request=None):
+        """ session_cookie
+        """
+        if request is None:
+            return None
+        _my_session_id = request.cookies.get(getenv('SESSION_NAME'))
+        return _my_session_id
