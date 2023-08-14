@@ -24,6 +24,13 @@ This project is about:
 - How to send Cookies
 - How to parse Cookies
 
+### 0x03-user_authentication_service
+This project is about:
+- How to declare API routes in a Flask app
+- How to get and set cookies
+- How to retrieve request form data
+- How to return various HTTP status codes
+
 ## Usage
 To use the projects in this repository, follow the instructions provided in each respective directory.
 
