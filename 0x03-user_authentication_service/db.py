@@ -2,10 +2,9 @@
 """DB module
 """
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-from sqlalchemy.orm.exc import NoResultFound, InvalidRequestError
+from sqlalchemy.exc import NoResultFound, InvalidRequestError
 
 from user import Base, User
 
@@ -46,8 +45,7 @@ class DB:
         try:
             user = self._session.query(User).filter_by(**kwargs).first()
             if user is None:
-                raise NoResultFound("No user found with the \
-                                    specified criteria.")
+                raise NoResultFound
             return user
         except InvalidRequestError as exc:
             self._session.rollback()
