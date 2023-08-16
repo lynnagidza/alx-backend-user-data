@@ -16,7 +16,7 @@ class DB:
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
-        self._engine = create_engine("sqlite:///a.db", echo=True)
+        self._engine = create_engine("sqlite:///a.db", echo=False)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
@@ -49,7 +49,7 @@ class DB:
             return user
         except InvalidRequestError as exc:
             self._session.rollback()
-            raise InvalidRequestError from exc
+            raise exc
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """Update the user attributes as passed in the arguments
